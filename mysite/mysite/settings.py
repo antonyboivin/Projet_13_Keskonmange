@@ -20,17 +20,14 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = ')qs#t371)k%@h__rw8)o6u)voulg$pbfn0xs&v9f@$j2&fm2-9'
+SECRET_KEY = 'mysecretkey'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    '142.93.130.195',
     'localhost',
     '127.0.0.1',
-    'keskonmangeproject.fr',
-    'www.keskonmangeproject.fr'
     ]
 
 
@@ -99,31 +96,6 @@ DATABASES = {
     }
 }
 
-
-"""
-# Local configuration
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql', # Adaptateur postgresql
-        'NAME': 'keskonmange', # Nom de la base de donnees
-        'USER': 'postgres', # Nom d'utilisateur
-        'PASSWORD': '',
-        'HOST': '', #''
-        'PORT': '5432',
-    }
-}
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'sqlite3.db',                      # Or path to database file if using sqlite3.
-        'USER': '',                      # Not used with sqlite3.
-        'PASSWORD': '',                  # Not used with sqlite3.
-        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
-    }
-}
-"""
 
 
 # Password validation
