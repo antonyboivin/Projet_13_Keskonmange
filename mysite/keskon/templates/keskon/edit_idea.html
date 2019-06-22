@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}<!DOCTYPE html>
+
+<div class="container mt-4">
+    {% block main %}
+
+    <form method="post" class="col-md-12" enctype="multipart/form-data">
+        {% csrf_token %}
+            {{ form.non_field_errors }}
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                    {{ form.mealIdeaName.errors }}
+                <label for="{{ form.mealIdeaName.id_for_label }}">Nom de votre idée de repas:</label>
+                {{ form.mealIdeaName }}
+            </div>
+            <div class="form-group col-md-4">
+            </div>
+            <div class="form-group col-md-4">
+                    {{ form.mealIdeaCategory.errors }}
+                <label for="{{ form.mealIdeaCategory.id_for_label }}">Catégorie:</label>
+                <p>{{ form.mealIdeaCategory }}</p>
+            </div>
+        </div>
+
+        <div class="form-group col-md-8">
+                {{ form.mealIdeaDescription.errors }}
+            <label for="{{ form.mealIdeaDescription.id_for_label }}">Desription rapide:</label>
+            {{ form.mealIdeaDescription }}
+        </div>
+
+
+        <div class="form-group col-md-12">
+                {{ form.mealIdeaSteps.errors }}
+            <label for="{{ form.mealIdeaSteps.id_for_label }}">Etapes de préparation:</label>
+            {{ form.mealIdeaSteps }}
+        </div>
+
+        <div class="form-row">
+        <div class="form-group col-md-6">
+                <label for="{{ form.mealIdeaImage.id_for_label }}">Ajouter une image / photo:</label>
+            {{ form.mealIdeaImage }}
+        </div>
+
+        <button type="submit" class="btn btn-primary">Ajouter Idée</button>
+    </form>
+
+    {% endblock %}
+</div>

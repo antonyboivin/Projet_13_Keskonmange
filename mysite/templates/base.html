@@ -1,0 +1,125 @@
+{% load static %}<!DOCTYPE html>
+{% load cookielaw_tags %}
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>{% block title %}Keskonmange ??!{% endblock %}</title>
+    <link href="https://fonts.googleapis.com/css?family=Peralta" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'cookielaw/css/cookielaw.css' %}">
+    
+    
+    {% block stylesheet %}
+        <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    {% endblock %}
+
+  </head>
+<body>
+
+    {% block body %} 
+    
+  <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+    <div class="container logo">
+      <a class="navbar-brand" href="{% url 'home' %}">Keskonmange ??!</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainMenu" aria-controls="mainMenu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="mainMenu">
+
+      {% if user.is_authenticated %}
+
+        <ul class="navbar-nav ml-auto">
+          <li>
+              <a class="nav-link js-scroll-trigger mr-4" href="{% url 'display_categories' %}">
+              <img src="{% static 'img/idea_list.png' %}" title="idea list" alt="idée repas" width="25" height="25"> Idées repas </a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="userMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Bienvenue {{ user.username }}
+            </a>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userMenu">
+              <a class="dropdown-item" href="{% url 'my_account' %}">Mon Compte</a>
+              <a class="dropdown-item" href="{% url 'password_change' %}">Changer le mot de passe</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="{% url 'logout' %}">Déconnexion</a>
+            </div>
+          </li>
+        </ul>
+      {% else %}
+        <form class="form-inline ml-auto">
+          <a href="{% url 'login' %}" class="btn btn-outline-secondary">Connection</a>
+          <a href="{% url 'signup' %}" class="btn btn-primary ml-2">Inscription</a>
+        </form>
+      {% endif %}
+      </div>
+    </div>
+  </nav>
+
+<div class="container">
+  <div class="main">
+      {% block main %}
+      {% endblock %}
+  </div>
+</div>
+
+<div class="container">
+  {% block content %}
+<!-- Footer -->
+<footer class="footerone page-footer font-small teal pt-4">
+
+    <!-- Footer Text -->
+    <div class="container-fluid text-center text-md-left">
+  
+      <!-- Grid row -->
+      <div class="row">
+  
+        <!-- Grid column -->
+        <div class="col-md-6 mt-md-0 mt-3 text-center">
+  
+          <!-- Content -->
+          <a style="color:white;" href="{% url 'email' %}">
+            <h5 class="text-uppercase font-weight-bold">Contact</h5>
+            <p></p>
+          </a>  
+
+        </div>
+        <!-- Grid column -->
+  
+        <hr class="clearfix w-100 d-md-none pb-3">
+  
+        <!-- Grid column -->
+        <div class="col-md-6 mb-md-0 mb-3 text-center">
+  
+          <!-- Content -->
+          <a style="color:white;" href="{% url 'legal_notice' %}">
+            <h5 class="text-uppercase font-weight-bold">Mentions légales</h5>
+            <p></p>
+          </a>
+
+        </div>
+        <!-- Grid column -->
+  
+      </div>
+      <!-- Grid row -->
+  
+    </div>
+    <!-- Footer Text -->
+  
+    <!-- Copyright -->
+    <div class="footertwo footer-copyright text-center py-3">© 2019 Tous droits résérvés:
+      <a style="color:white;" href="#"> Antony Boivin</a>
+    </div>
+    <!-- Copyright -->
+  
+  </footer>
+  <!-- Footer -->
+  {% endblock %}
+</div>
+
+    {% endblock body %}  
+    <script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'cookielaw/js/cookielaw.js' %}"></script>
+  </body>
+</html>

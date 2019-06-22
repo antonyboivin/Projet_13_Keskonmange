@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}<!DOCTYPE html>
+
+
+{% block main %}
+<div class="jumbotron">
+        <h1 class="text-center">Bienvenue chez vous {{ request.user }} !</h1>
+        <hr class="my-1">
+    </div>
+<div class="container" style="text-align: center;">
+    <!-- Example row of columns -->
+    <div class="row">
+        <div class="col-md-6">
+            <a class="navbar-brand" href="{% url 'add_idea' %}">
+            <h3 class="mb-3">Ajouter idée repas</h3>
+            <img src="{% static 'img/add_idea.png' %}" height="150" class="d-inline-block align-top center" alt="Ajouter idée">
+            <p></p>
+            </a>
+        </div>
+
+        <div class="col-md-6">
+            <a class="navbar-brand" href="{% url 'week_menu' %}">
+            <h3 class="mb-3">Menus de la semaine</h3>
+            <img src="{% static 'img/menu.png' %}" height="150" class="d-inline-block align-top center" alt="Menu de la semaine">
+            <p></p>
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

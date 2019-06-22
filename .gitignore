@@ -1,0 +1,6 @@
+env/
+__pycache__/
+ mysite/mysite/__pycache__/
+.vscode/
+
+temp/

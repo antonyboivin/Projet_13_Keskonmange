@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}<!DOCTYPE html>
+
+
+{% block main %}
+<div class="jumbotron">
+    <h1 class="display-4">Idées de repas!</h1>
+    <p class="lead">Vous trouverez içi une liste d'idées de repas pour vous aidez à plannifier votre semaine.</p>
+    <hr class="my-4">
+    <p>Cliquez pour voir tous les repas du site ou choisissez une catégorie.</p>
+    <p class="lead">
+        <a class="btn btn-primary btn-lg" href="{% url 'display_all_idea' %}" role="button">Tout voir</a>
+    </p>
+</div>
+
+<div class="container">
+    <!-- Example row of columns -->
+    <div class="row">
+        <div class="col-md-4">
+            <h2>Viande</h2>
+            <img class="img-fluid" src="{% static "img/viande.jpg" %}" alt="Viande" width="325" height="200">
+            <p><a class="btn btn-secondary" href="{% url 'display_by_category' cat=list_cat.meat %}" role="button">Voir les idées »</a></p>
+        </div>
+        <div class="col-md-4">
+            <h2>Poisson</h2>
+            <img class="img-fluid" src="{% static "img/poisson.jpg" %}" alt="Poisson" width="325" height="200">
+            <p><a class="btn btn-secondary" href="{% url 'display_by_category' cat=list_cat.fish %}" role="button">Voir les idées »</a></p>
+        </div>
+        <div class="col-md-4">
+            <h2>Légumes</h2>
+            <img class="img-fluid" src="{% static "img/legume.jpg" %}" alt="Légume" width="325" height="200">
+            <p><a class="btn btn-secondary" href="{% url 'display_by_category' cat=list_cat.vegetable %}" role="button">Voir les idées »</a></p>
+        </div>
+    </div>
+
+    <hr>
+    <div class="row">
+        <div class="col-md-4">
+            <h2>Féculent</h2>
+            <img class="img-fluid" src="{% static "img/feculent.jpg" %}" alt="Féculent" width="325" height="200">
+            <p><a class="btn btn-secondary" href="{% url 'display_by_category' cat=list_cat.starchy %}" role="button">Voir les idées »</a></p>
+        </div>
+        <div class="col-md-4">
+            <h2>Pâte</h2>
+            <img class="img-fluid" src="{% static "img/pate.jpg" %}" alt="Pate" width="325" height="200">
+            <p><a class="btn btn-secondary" href="{% url 'display_by_category' cat=list_cat.dough %}" role="button">Voir les idées »</a></p>
+        </div>
+        <div class="col-md-4">
+            <h2>Dessert</h2>
+            <img class="img-fluid" src="{% static "img/dessert.jpg" %}" alt="Dessert" width="325" height="200">
+            <p><a class="btn btn-secondary" href="{% url 'display_by_category' cat=list_cat.dessert %}" role="button">Voir les idées »</a></p>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+ 

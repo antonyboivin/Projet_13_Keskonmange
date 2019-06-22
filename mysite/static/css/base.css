@@ -1,0 +1,88 @@
+body {
+    background-image: url(../img/prism.png);
+  }
+  
+  .logo {
+    font-family: 'Peralta', cursive;
+  }
+  
+  .logo a {
+    color: rgba(0,0,0,.9);
+  }
+  
+  .logo a:hover,
+  .logo a:active {
+    text-decoration: none;
+  }
+
+  .main {
+    display: -ms-flexbox;
+    /*display: flex;*/
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    padding: .75rem 1rem;
+    margin-bottom: 1rem;
+    background-color: #e9ecef;
+    border-radius: .25rem;
+    margin-top: 1.5rem !important;
+    margin-bottom: 1.5rem !important;
+    font-family: 'Peralta', cursive;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.Paralyafont {
+  font-family: 'Peralta', cursive;
+}
+
+.delete-link {
+  background-color: red;
+  color: white;
+  border: 1px solid white;
+  cursor: pointer;
+  padding: 3px;
+}
+#result {
+  margin: 20px;
+  padding: 10px;
+  border: 1px solid orange;
+}
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
+.stepboard {
+  background-color: white;
+  border: 4mm ridge rgba(73, 70, 75, 0.6);
+  border-radius: 10%;
+  margin-top: 35px;
+  margin-bottom: 35px;
+  padding: 15px;
+  display:inline-block;
+  margin-left: auto;
+}
+
+.footerone {
+  background-color: rgb(32, 144, 196);
+  color: white;
+}
+
+.footertwo {
+  background-color: rgb(23, 101, 138);
+  color: rgb(40, 179, 243);
+}
+
+.legal_notice {
+  width: 75%;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}

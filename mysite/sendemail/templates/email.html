@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block stylesheet %}
+  <link rel="stylesheet" href="{% static 'css/accounts.css' %}">
+{% endblock %}
+
+
+{% block title %}Contact{% endblock %}
+
+{% block content %}
+  <div class="row justify-content-center">
+    <div class="col-lg-4 col-md-6 col-sm-8">
+      <div class="card">
+        <div class="card-body">
+          <h3 class="card-title">Formulaire de contact</h3>
+          <p>Veuillez renseigner les champs suivants pour nous contacter.</p>
+          <form method="post" novalidate>
+            {% csrf_token %}
+
+            {{ form.from_email.errors }}
+            <label for="{{ form.from_email.id_for_label }}">Votre email:</label>
+            <p>{{ form.from_email }}</p>
+
+            {{ form.subject.errors }}
+            <label for="{{ form.subject.id_for_label }}">Sujet du message:</label>
+            <p>{{ form.subject }}</p>
+
+            {{ form.message.errors }}
+            <label for="{{ form.message.id_for_label }}">Votre message:</label>
+            <p>{{ form.message }}</p>
+
+            <button type="submit" class="btn btn-primary btn-block">Envoyer votre message.</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load static %}<!DOCTYPE html>
+
+{% block main %}
+<body>
+        <div class="page">
+            <div class="jumbotron">
+                <h1 class="display-4 text-center">Oups !</h1>
+                <h2 class="display-4 text-center">La page est introuvable :(</h2>
+                <hr class="my-1">
+            </div>
+            <br>
+        </div>
+        <div>
+            <img class="center" src="{% static "img/404.jpg" %}" alt="404 page" width="650" height="400">
+        </div>
+    </body>
+{% endblock %}

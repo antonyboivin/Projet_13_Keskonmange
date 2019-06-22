@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}<!DOCTYPE html>
+
+{% block main %}
+{% if user.is_authenticated %}
+
+{% else %}
+<div id="CookielawBanner">
+    <div class="container">
+        <h6>Consentement d'utilisation des Cookies</h6>
+        <p>
+            Notre site sauvegarde des traceurs textes (cookies) sur votre appareil afin de vous garantir de meilleurs contenus et à des fins de collectes statistiques.Vous pouvez désactiver l'usage des cookies en changeant les paramètres de votre navigateur. En poursuivant votre navigation sur notre site sans changer vos paramètres de navigateur vous nous accordez la permission de conserver des informations sur votre appareil.
+        </p>
+        <a class="btn btn-primary pull-right" href="javascript:Cookielaw.createCookielawCookie();">J'accepte</a>
+    </div>
+</div> 
+{% endif %}
+
+<div class="jumbotron">
+    <h1 class="display-4 text-center">Qu'est-ce qu'on mange ??!</h1>
+    <p class="lead text-center">Vous trouverez içi une idée de repas offerte gracieusement par votre application !</p>
+    <hr class="my-1">
+</div>
+
+<div>
+    <p class="display-4 text-center mb-3">{{ random_idea.mealIdeaName }} !</p>
+</div>
+
+<div>
+    {% if random_idea.mealIdeaImage %}
+        <img class="center img-fluid" src="{{ random_idea.mealIdeaImage.url }}" alt="{{ random_idea.mealIdeaName }}" width="650" height="400">
+    {% else %}
+        <img class="center img-fluid" src="{% static "image_nondispo.png" %}" alt="image_nondispo" width="650" height="400">
+    {% endif %}
+</div>
+
+<div class="lead text-center mt-5">Proposée par {{ random_idea.mealIdeaPublisher }}</div>
+
+<p><a class="btn btn-secondary center" href="{% url 'detail_idea' random_idea.id %}" role="button">Voir l'idée »</a></p> 
+
+<p class="display-4 text-center">{{ total_mealIdeaLikes }} like{{ total_mealIdeaLikes|pluralize }}</p>
+
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}<!DOCTYPE html>
+
+
+{% block main %}
+
+<div class="row">
+    {% for idea in list_idea %}
+        {% if forloop.counter0|divisibleby:3 %}
+            </div><br><div class="row">
+        {% endif %}
+            <div class="col-md-4">
+                <h4>{{ idea.mealIdeaName|truncatechars:20 }}</h4>
+                {% if idea.mealIdeaImage %}
+                    <img class="img-fluid" src="{{ idea.mealIdeaImage.url }}" alt="{{ idea.mealIdeaName }}" width="325" height="200">
+                {% else %}
+                    <img class="img-fluid" src="{% static "image_nondispo.png" %}" alt="image_nondispo" width="325" height="200">
+                {% endif %}
+                <p style="margin-left: auto;" class="row">
+                    <a class="btn btn-secondary" href="{% url 'detail_idea' idea.id %}" role="button">Voir l'idée »</a>
+                    <a class="btn btn-info" href="{% url 'display_by_category' idea.mealIdeaCategory %}" role="button">Voir la catégorie »</a>
+                </p> 
+                <p>{{ idea.total_mealIdeaLikes }} like{{ idea.total_mealIdeaLikes|pluralize }}</p> 
+            </div>
+    {% endfor %}
+</div>
+<!-- Pagination -->
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-left">
+        {% if list_idea.has_previous %}
+        <li class="page-item"><a class="page-link" href="?page={{ list_idea.previous_page_number }}">&laquo; Précédent</a></li>
+        {% else %}
+        <li class="page-item disabled"><a class="page-link" href="#"><span>&laquo;</span></a></li>
+        {% endif %}
+        {% for i in paginator.page_range %}
+        {% if list_idea.number == i %}
+        <li class="page-item active"><a class="page-link" href="#">{{ i }} <span class="sr-only">(current)</span></a></li>
+        {% else %}
+        <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+        {% endif %}
+        {% endfor %}
+        {% if list_idea.has_next %}
+        <li class="page-item"><a class="page-link" href="?page={{ list_idea.next_page_number }}">&raquo; Suivant</a></li>
+        {% else %}
+        <li class="page-item disabled"><a class="page-link" href="#"><span>&raquo;</span></a></li>
+        {% endif %}
+    </ul>
+</nav>
+<!-- End Pagination -->
+{% endblock %}
+
+
+
+
+
+
+
+
+

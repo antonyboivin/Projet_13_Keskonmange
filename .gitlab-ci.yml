@@ -1,0 +1,74 @@
+image: docker:stable
+services:
+  - name: docker:dind
+
+stages:
+  - build
+  - test
+  - release
+  - deploy
+
+variables:
+  PROJET_IMAGE: registry.gitlab.com/boivinantony/projet13:latest
+  DOCKER_DRIVER: overlay2
+
+build:
+  stage: build
+  script:
+    - ls
+  only:
+    - recette
+
+test:
+  stage: test
+  before_script:
+    - apk add --no-cache py-pip python-dev libffi-dev openssl-dev gcc libc-dev make
+    - pip install docker-compose
+  script:
+    - docker-compose build
+    - docker-compose up -d
+    - docker-compose run --rm djangoapp /bin/bash -c "cd mysite; ./manage.py test"
+  only:
+    - feature/deploy
+
+
+deploy:
+  stage: deploy
+  before_script:
+    # Install ssh-agent if not already installed, it is required by Docker.
+    # (change apt-get to yum if you use a CentOS-based image)
+    - 'which ssh-agent || (apk update && apk add openssh-client)'
+    # Run ssh-agent (inside the build environment)
+    - eval $(ssh-agent -s)
+    # Add the SSH key stored in SSH_PRIVATE_KEY variable to the agent store
+    - mkdir -m 700 -p ~/.ssh
+    - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+    - apk add --update sshpass
+    - sshpass -p "" ssh-add ~/.ssh/id_rsa
+    # For Docker builds disable host key checking. Be aware that by adding that
+    # you are suspectible to man-in-the-middle attacks.
+    # WARNING: Use this only with the Docker executor, if you use it with shell
+    # you will overwrite your user's SSH config.
+    - mkdir -p ~/.ssh
+    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+    # In order to properly check the server's host key, assuming you created the 
+    # SSH_SERVER_HOSTKEYS variable previously, uncomment the following two lines
+    # instead.
+    - mkdir -p ~/.ssh
+    - '[[ -f /.dockerenv ]] && echo "$SSH_PUBLIQUE_KEY" > ~/.ssh/known_hosts'
+  script:
+    - ssh -T root@142.93.130.195 "cd projet13 && docker-compose down"
+    - ssh -T root@142.93.130.195 "rm -r projet13"
+        # git clone master
+    #- ssh -T root@142.93.130.195 "git clone https://$TOKEN_USER:$TOKEN_PASS@gitlab.com/boivinantony/projet13.git && cd projet13"
+        # git clone specific branch
+    - ssh -T root@142.93.130.195 "git clone -b feature/deploy https://$TOKEN_USER:$TOKEN_PASS@gitlab.com/boivinantony/projet13.git && cd projet13"
+    - ssh -T root@142.93.130.195 "cd projet13 && docker-compose build && docker-compose run djangoapp mysite/manage.py collectstatic --no-input"
+    - ssh -T root@142.93.130.195 "cd projet13 && cat dump_16-06-2019_00_03_13.sql | docker exec -i projet13_database1_1 psql -U database1_role -d database1 && docker-compose up -d"
+  only:
+    #- develop
+    - feature/deploy
+
+
+

@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% load static %}<!DOCTYPE html>
+
+{% block main %}
+<div class="row">
+    <div class="col-md-4">
+        <h4>{{ idea.mealIdeaName }}</h4>
+{% if idea.mealIdeaImage %}
+    <img class="img-fluid" src="{{ idea.mealIdeaImage.url }}" alt="{{ idea.mealIdeaName }}" width="325" height="200">
+{% else %}
+    <img class="img-fluid" src="{% static "image_nondispo.png" %}" alt="image_nondispo" width="325" height="200">
+{% endif %}
+    </div>
+    <div class="col-md-8">
+        <div class="stepboard">
+            <p><pre class="Paralyafont">{{ idea.mealIdeaSteps }} </pre></p>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-2">
+        <!-- Like button -->
+        <p>{{ total_mealIdeaLikes }} like{{ total_mealIdeaLikes|pluralize }}</p>
+        {% if user.is_authenticated %}
+            <form action="{% url "likes_idea" %}" method="post">
+                {% csrf_token %}
+                {% if is_liked %}
+                    <button type="submit" name="idea.id" value="{{ idea.id }}" class="btn btn-secondary">Dislike</button>
+                {% else %}
+                    <button type="submit" name="idea.id" value="{{ idea.id }}" class="btn btn-primary">like</button> 
+                {% endif %}
+            </form>
+        {% endif %}
+        <!-- Like button -->
+    </div>
+    <div class="col-md-2">
+        <!-- edit button -->
+        {% if user == idea.mealIdeaPublisher %}
+            <p>Modifier </p>
+            <form action="{% url "edit_idea" idea.id %}" method="post">
+                {% csrf_token %}
+                    <button type="submit" name="idea.id" value="{{ idea.id }}" class="btn btn-warning">Edit</button>
+            </form>
+        {% endif %}
+        <!-- edit button -->
+    </div>
+    <div class="col-md-2">
+        <!-- delete button -->
+        {% if user == idea.mealIdeaPublisher %}
+            <p>Supprimer</p>
+            <form action="{% url "delete_idea" idea.id %}" method="post">
+                {% csrf_token %}
+                    <button type="submit" name="idea.id" value="{{ idea.id }}" class="btn btn-danger" onclick="return confirm('Voulez-vous vraiment supprimer cette idée repas ?')">Supprimer</button>
+            </form>
+        {% endif %}
+        <!-- delete button -->
+    </div>
+    <div class="col-md-2">
+        <!-- add week menu button -->
+        {% if user.is_authenticated %}
+            <p>Ajouter au menu</p>
+            <form action="" method="post">
+                {% csrf_token %}
+                <div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                    <div class="modal-header text-center">
+                        <h4 class="modal-title w-100 font-weight-bold">Ajouter un repas</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body mx-3">
+                        <div class="md-form mb-5">
+                        <i class="fas fa-envelope prefix grey-text"></i>
+                        <label data-error="wrong" data-success="right" for="defaultForm-email">Séléctionnez un jour</label>
+                        <p>{{ form.day }}</p>
+                        </div>
+                        <div class="md-form mb-5">
+                        <i class="fas fa-envelope prefix grey-text"></i>
+                        <label data-error="wrong" data-success="right" for="defaultForm-email">Séléctionnez repas</label>
+                        <p>{{ form.momentDay }}</p>
+                        </div>
+                        <div class="md-form mb-4">
+                        <i class="fas fa-lock prefix grey-text"></i>
+                        <label data-error="wrong" data-success="right" for="defaultForm-pass">Type de repas</label>
+                        <P>{{ form.typeMeal }}</P>
+                        </div>
+            
+                    </div>
+                    <h4 class="modal-title w-100 font-weight-bold text-center">Ajouter puis retrourner...</h4>
+                    <div class="modal-footer d-flex justify-content-center">
+                        <button type="submit" class="btn btn-primary" name="week_menu">...au menu de la semaine</button>
+                        <button type="submit" class="btn btn-primary" name="display_all_idea">...a toutes les idées</button>
+                        <button type="submit" class="btn btn-primary" name="display_categories">...a toutes les catégories</button>
+                    </div>
+                    </div>
+                </div>
+                </div>
+            </form>
+            <div class="text-center">
+                <a href="" class="btn btn-success" data-toggle="modal" data-target="#modalLoginForm">Ajouter</a>
+            </div>
+        {% endif %}
+        <!-- add week menu button -->
+    </div>
+</div>
+
+{% endblock %}
