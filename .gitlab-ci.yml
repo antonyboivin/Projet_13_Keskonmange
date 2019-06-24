@@ -12,12 +12,7 @@ variables:
   PROJET_IMAGE: registry.gitlab.com/boivinantony/projet13:latest
   DOCKER_DRIVER: overlay2
 
-build:
-  stage: build
-  script:
-    - ls
-  only:
-    - recette
+
 
 test:
   stage: test
@@ -29,7 +24,7 @@ test:
     - docker-compose up -d
     - docker-compose run --rm djangoapp /bin/bash -c "cd mysite; ./manage.py test"
   only:
-    - feature/deploy
+    - /^feature\/.+$/
 
 
 deploy:
@@ -61,14 +56,9 @@ deploy:
     - ssh -T root@142.93.130.195 "cd projet13 && docker-compose down"
     - ssh -T root@142.93.130.195 "rm -r projet13"
         # git clone master
-    #- ssh -T root@142.93.130.195 "git clone https://$TOKEN_USER:$TOKEN_PASS@gitlab.com/boivinantony/projet13.git && cd projet13"
-        # git clone specific branch
-    - ssh -T root@142.93.130.195 "git clone -b feature/deploy https://$TOKEN_USER:$TOKEN_PASS@gitlab.com/boivinantony/projet13.git && cd projet13"
-    - ssh -T root@142.93.130.195 "cd projet13 && docker-compose build && docker-compose run djangoapp mysite/manage.py collectstatic --no-input"
-    - ssh -T root@142.93.130.195 "cd projet13 && cat dump_16-06-2019_00_03_13.sql | docker exec -i projet13_database1_1 psql -U database1_role -d database1 && docker-compose up -d"
+    - ssh -T root@142.93.130.195 "git clone https://$TOKEN_USER:$TOKEN_PASS@gitlab.com/boivinantony/projet13.git && cd projet13"
+        # git clone specific branch => develop
+    #- ssh -T root@142.93.130.195 "git clone -b develop https://$TOKEN_USER:$TOKEN_PASS@gitlab.com/boivinantony/projet13.git && cd projet13"
+    - ssh -T root@142.93.130.195 "cd projet13 && docker-compose build && docker-compose run djangoapp mysite/manage.py collectstatic --no-input && docker-compose up -d"
   only:
-    #- develop
-    - feature/deploy
-
-
-
+    - master
